@@ -6,14 +6,22 @@
 
 */
 
-#include "Vector_as_Class.h"
+
 #include <iostream>
 #include <vector>
 #include <algorithm> 
 #include <string>
 #include <stack>
 #include <cassert>
+#include <set>
+#include <utility>
+#include <map>
 using namespace std; 
+typedef map<string, int> MapT;
+typedef MapT::const_iterator MapIterT;
+
+
+
 
 //Credit https://www.geeksforgeeks.org/passing-vector-constructor-c/ clarifications added
 class MyClassVector1 
@@ -198,34 +206,106 @@ int main()
     
 
     /****Section_Name**** Set*/
-    //Write the code as presented in: 3. std::set
 
-    //Write comments that help one better understand what the code is doing.
+    cout<<"\n\nstd::set\n";
+    set <int> iset;   //set of uniqure integer numbers
+    iset.insert(11);  //populate set with some values
+    iset.insert(-11);
+    iset.insert(55);
+    iset.insert(22);
+    iset.insert(22);
+    if( iset.find(55) !=iset.end() ){ //is value already stored?
+      iset.insert(55);
+    }
+    assert(iset.size()==4 );      //one way to check values 
+    set<int>::iterator it1;
+    for ( it1 = iset.begin(); it1 !=iset.end(); it1++){ //prints values on the set
+      cout<<" "<< *it1;
+    }
+
+
 
     /****Section_Name****Pair_Structure*/
-    //Write the code as presented in: 4. std::pair structure
 
-    //Write comments that help one better understand what the code is doing.
+    cout<<"\n\nPair structure\n";
+    pair< string, string > strstr;  //creating a pair to hold 2 strings
+    strstr.first = "Hello";         //first string
+    strstr.second = "World";        //second string
+
+    pair< int, string > intstr;    //creating a pair that holds one int and string
+    intstr.first =1;               //first half of the pair is an int
+    intstr.second = "one";         //second half of the pair in a string
+
+    pair< string, int > strint( "two", 2);
+    assert(strint.first =="two");
+    assert(strint.second == 2);
+
+    cout<<"Nothing to see here: ¯\\_(ツ)_/¯";
 
     /****Section_Name**** Map_Insert*/
-    //Write the code as presented in: 14. std::map::insert
+    MapT amap;
+    pair< MapIterT, bool> result =
+        amap.insert( make_pair( "Fred", 45) );
 
-    //Write comments that help one better understand what the code is doing.
+      assert( result.second == true);
+      assert( result.first->second == 45 );
+
+      result = amap.insert ( make_pair ( "Fred", 54) );
+
+      //Fred was already in the map, and result.first
+      // simply points there now:
+      assert( result.second == false );
+      assert( result.first->second == 45 );
+
+
+
+
+
 
     /****Section_Name****Map_Summary*/
-    //Write the code as presented in: 16. Map summary
+    cout<<"\n\nMap Summary"<<endl;
 
-    //Write comments that help one better understand what the code is doing.
+    map< string, string > phone_book; //creating a map with 2 strings
+    phone_book[ "411" ] = "Directory"; 
+    phone_book[ "911" ] = "Emergency";
+    phone_book[ "508-678-2811" ] = "BCC";
+    if ( phone_book.find( "411" ) != phone_book.end()  ){
+      phone_book.insert(
+        make_pair(
+          string ("411"),
+          string ("Directory" )
+        )
+      );
+    }
+    assert( phone_book.size() ==3 );
+    map< string, string >::const_iterator it2;
+    for ( it2 = phone_book.begin(); it2 != phone_book.end(); ++it2 ){
 
+      cout
+        <<" "<< it2->first    //referencing first
+        <<" " <<it2->second   //referencing second
+        << endl
+        ;
+    }
+    
     /****Section_Name**** Sort_Algorithm*/
-    //Write the code as presented in: 23. sort example
+    int arr[100]; //creating an array
+    sort( arr, arr +100); //sorting array
+    vector <int> v1;    //creating a vector
+    sort( v1.begin(), v1.end() ); //sorting the vector
+    
+   
 
-    //Write comments that help one better understand what the code is doing.
+    /****Section_Name****Predicate_Algorithm
+    bool less_than_7 (int value)      //creating bool function
+    {
 
-    /****Section_Name****Predicate_Algorithm*/
-    //Write the code as presented in: 25. count_if and predicate function
+      return value < 7 ;    //Will check if value is less than 7
+    }
+    vector<int> v2;         //creating vector called v2
+    int count_less = std::count_if ( v2.begin(), v2.end(), less_than_7 ); //Will check to see if the value in the vector is between the range, if it is then it will be added to count count_less
+    
 
-    //Write comments that help one better understand what the code is doing. 
-
+    */
       return 0; 
  }
